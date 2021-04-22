@@ -1,5 +1,5 @@
 import flask
-import pandas
+import pandas as pd
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -18,9 +18,9 @@ def home():
     return "<h1>Distant Reading Archive</h1><p>This site is a prototype API for distant reading of science fiction novels.</p>"
 
 #Get all founders of the dataset
-@app.route('/founders', methods=['GET'])
-def founders():
-    return "<h1>ALL FOUNDERS</h1>";
+@app.route('/statuses', methods=['GET'])
+def statuses():
+    return print(companies['status'].value_counts())
 
 #Highest investment of the dataset
 # @app.route('/invesment/highest', methods=['GET'])
@@ -30,9 +30,13 @@ def founders():
 
 
 
+
 # @app.route('/investor/{id}', methods=['GET'])
 # def highestInvestment():
 #
 #     return objectJson
 #
-app.run()
+
+if __name__ == "__main__":
+    companies = pd.read_csv('DataSet_StartupInvestment/objects.csv', low_memory=False)
+    app.run(port=8080)
