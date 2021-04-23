@@ -1,5 +1,10 @@
 import flask
 import pandas as pd
+import numpy as np 
+
+
+
+
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -10,9 +15,9 @@ def home():
     return "<h1>Pokemon Dataset</h1><p>This is a example API to test the data set of pokemon</p>"
 
 #Get all founders of the dataset
-@app.route('/names', methods=['GET'])
-def statuses():
-    return pokemon['Name'].value_counts()
+@app.route('/types', methods=['GET'])
+def types_pokemon():
+    return df.to_json('test.json') #pokemon['Name'].value_counts()
 
 #Highest investment of the dataset
 # @app.route('/invesment/highest', methods=['GET'])
@@ -26,5 +31,16 @@ def statuses():
 #     return objectJson
 
 if __name__ == "__main__":
-    pokemon = pd.read_csv('PokeTypeMatchupData.csv', low_memory=False)
-    app.run(port=8080)
+        df_pokemon = pd.read_csv('PokeTypeMatchupData.csv', low_memory=False)
+        df = df_pokemon.copy(deep=True)
+        df[df.columns] = df.apply(lambda a: a.str.strip('*'))
+        df[df.columns] = df.apply(lambda a: a.str.strip('#'))
+        types = df.iloc[:,1:]
+        types = types.astype("float")
+        types.insert(loc=0, column='Pokemon', value=df["Name"])
+        df = types
+
+ 
+       # dir_pokemon = '/{}'.format('test.json')
+        
+        app.run(port=8080)
