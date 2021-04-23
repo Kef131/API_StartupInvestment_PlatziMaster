@@ -17,7 +17,7 @@ def home():
 #Get all founders of the dataset
 @app.route('/types', methods=['GET'])
 def types_pokemon():
-    return df.to_json('test.json') #pokemon['Name'].value_counts()
+    return df.to_json()
 
 #Highest investment of the dataset
 # @app.route('/invesment/highest', methods=['GET'])
@@ -39,8 +39,4 @@ if __name__ == "__main__":
         types = types.astype("float")
         types.insert(loc=0, column='Pokemon', value=df["Name"])
         df = types
-
- 
-       # dir_pokemon = '/{}'.format('test.json')
-        
         app.run(port=8080)
