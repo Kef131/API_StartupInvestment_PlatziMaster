@@ -12,7 +12,7 @@ app.config["DEBUG"] = True
 # Definition of routes in our API
 @app.route('/', methods=['GET'])
 def home():
-    return "<h1>Pokemon Dataset</h1><p>This is a example API to test the data set of pokemon</p>"
+    return "<h1>Pokemon Dataset Change</h1><p>This is a example API to test the data set of pokemon</p>"
 
 #Get all founders of the dataset
 @app.route('/types', methods=['GET'])
