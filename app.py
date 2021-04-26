@@ -17,7 +17,16 @@ def home():
 #Get all pokemons and types of the dataset
 @app.route('/types', methods=['GET'])
 def types_pokemon():
+    df_pokemon = pd.read_csv('PokeTypeMatchupData.csv', low_memory=False)
+    df = df_pokemon.copy(deep=True)
+    df[df.columns] = df.apply(lambda a: a.str.strip('*'))
+    df[df.columns] = df.apply(lambda a: a.str.strip('#'))
+    types = df.iloc[:,1:]
+    types = types.astype("float")
+    types.insert(loc=0, column='Pokemon', value=df["Name"])
+    df = types
     return df.to_json()
+
 
 
 # @app.route('/invesment/highest', methods=['GET'])
