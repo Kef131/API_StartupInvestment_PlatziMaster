@@ -14,19 +14,19 @@ app.config["DEBUG"] = True
 def home():
     return "<h1>Pokemon Dataset Change</h1><p>This is a example API to test the data set of pokemon</p>"
 
-#Get all founders of the dataset
+#Get all pokemons and types of the dataset
 @app.route('/types', methods=['GET'])
 def types_pokemon():
     return df.to_json()
 
-#Highest investment of the dataset
+
 # @app.route('/invesment/highest', methods=['GET'])
 # def highestInvestment():
 #     #call the function, output information in json
 #     return objectJson
 
 
-# @app.route('/investor/{id}', methods=['GET'])
+
 # def highestInvestment():
 #     return objectJson
 
