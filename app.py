@@ -1,51 +1,28 @@
 import flask
-import pandas as pd
-import numpy as np 
-
-
-
-
+from StartupController import StartupController
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
+startupData = StartupController()
 
 # Definition of routes in our API
 @app.route('/', methods=['GET'])
 def home():
-    return "<h1>Pokemon Dataset Change</h1><p>This is a example API to test the data set of pokemon</p>"
-
-#Get all pokemons and types of the dataset
-@app.route('/types', methods=['GET'])
-def types_pokemon():
-    df_pokemon = pd.read_csv('PokeTypeMatchupData.csv', low_memory=False)
-    df = df_pokemon.copy(deep=True)
-    df[df.columns] = df.apply(lambda a: a.str.strip('*'))
-    df[df.columns] = df.apply(lambda a: a.str.strip('#'))
-    types = df.iloc[:,1:]
-    types = types.astype("float")
-    types.insert(loc=0, column='Pokemon', value=df["Name"])
-    df = types
-    return df.to_json()
+    return "<h1>Startup Enviroment Dataset</h1><p>This is a example API to get information about the startups, VC, " \
+           "fundings, and so on </p> "
 
 
-
-# @app.route('/invesment/highest', methods=['GET'])
-# def highestInvestment():
-#     #call the function, output information in json
-#     return objectJson
-
+# Get all the data of the companies
+@app.route('/companies', methods=['GET'])
+def all_companies():
+    return startupData.all_companies_name()
 
 
-# def highestInvestment():
-#     return objectJson
+# All of the possible statuses of the companies
+@app.route('/statuses', methods=['GET'])
+def all_statuses():
+    return startupData.all_statuses()
+
 
 if __name__ == "__main__":
-        df_pokemon = pd.read_csv('PokeTypeMatchupData.csv', low_memory=False)
-        df = df_pokemon.copy(deep=True)
-        df[df.columns] = df.apply(lambda a: a.str.strip('*'))
-        df[df.columns] = df.apply(lambda a: a.str.strip('#'))
-        types = df.iloc[:,1:]
-        types = types.astype("float")
-        types.insert(loc=0, column='Pokemon', value=df["Name"])
-        df = types
-        app.run(port=8080)
+    app.run(port=8080)
